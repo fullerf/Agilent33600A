@@ -1,13 +1,228 @@
 ReplyTimeout = 500;
-OutTerminator = "\r\n";
+Terminator = "\n";
 
 @writetimeout { disconnect; }
 @replytimeout { disconnect; }
 @readtimeout  { disconnect; }
 @mismatch     { disconnect; }
 
+#Specific Commands
+
 getIDN {
     out "*IDN?";
-    in "%\$1[^\r\n]";
+    in "%\$1[^\n]";
+    ExtraInput = Ignore;
+}
+
+setFunction {
+    out "\$1:Function %{Sinusoid|Square|Triangle}";
+    ExtraInput = Ignore;
+}
+
+getFunction {
+    out "\$1:Function?";
+    in  "%{SIN|SQU|TRI}";
+    ExtraInput = Ignore;
+}
+
+
+setBurstTrigMode {
+    out "\$1:Burst:Mode %{Triggered|Gated}";
+    ExtraInput = Ignore;
+}
+
+getBurstTrigMode {
+    out "\$1:Burst:Mode?";
+    in "%{TRIG|GAT}";
+    ExtraInput = Ignore;
+}
+
+setTrigSource {
+    out "\$1:Source %{External|BUS}";
+    @init {out "\$1:Source External";}
+}
+
+getTrigSource {
+    out "\$1:Source?";
+    in "%{EXT|BUS}";
+    ExtraInput = Ignore;
+}
+
+setTrigEdge {
+    out "\$1:Slope %{POS|NEG}";
+    ExtraInput = Ignore;
+}
+
+getTrigEdge {
+    out "\$1:Slope?";
+    in "%{POS|NEG}";
+}
+
+getError {
+    out "System:Error?";
+    in "%255[^\n]";
+    @init {out "*CLS";}
+}
+
+setBurstState {
+    out "\$1:Burst:State %{OFF|ON}";
+    @init {out "\$1:Burst:State ON";}   
+}
+
+getBurstState {
+    out "\$1:Burst:State?";
+    in "%d";
+    ExtraInput = Ignore;
+}
+
+
+#Generic Functions without units
+
+setFloatSCPIlvl1 {
+    out "\$1 %g";
+    ExtraInput = Ignore;
+}
+
+getFloatSCPIlvl1 {
+    out "\$1?";
+    in "%g";
+    ExtraInput = Ignore;
+}
+
+
+setIntSCPIlvl1 {
+    out "\$1 %d";
+    ExtraInput = Ignore;
+}
+
+getIntSCPIlvl1 {
+    out "\$1?";
+    in "%d";
+    ExtraInput = Ignore;
+}
+
+
+setStringSCPIlvl1 {
+    out "\$1 %s";
+    ExtraInput = Ignore;
+}
+
+getStringSCPIlvl1 {
+    out "\$1?";
+    in "%s";
+}
+
+setFloatSCPIlvl2 {
+    out "\$1:\$2 %g";
+    ExtraInput = Ignore;
+}
+
+getFloatSCPIlvl2 {
+    out "\$1:\$2?";
+    in "%g";
+}
+
+setIntSCPIlvl2 {
+    out "\$1:\$2 %d";
+    ExtraInput = Ignore;
+}
+
+getIntSCPIlvl2 {
+    out "\$1:\$2?";
+    in "%d";
+    ExtraInput = Ignore;
+}
+
+setStringSCPIlvl2 {
+    out "\$1:\$2 %s";
+    ExtraInput = Ignore;
+}
+
+getStringSCPIlvl2 {
+    out "\$1:\$2?";
+    in "%s";
+    ExtraInput = Ignore;
+}
+
+setFloatSCPIlvl3 {
+    out "\$1:\$2:\$3 %g";
+    ExtraInput = Ignore;
+}
+
+getFloatSCPIlvl3 {
+    out "\$1:\$2:\$3?";
+    in "%g";
+    ExtraInput = Ignore;
+}
+
+setIntSCPIlvl3 {
+    out "\$1:\$2:\$3 %d";
+    ExtraInput = Ignore;
+}
+
+getIntSCPIlvl3 {
+    out "\$1:\$2:\$3?";
+    in "%i";
+    ExtraInput = Ignore;
+}
+
+setStringSCPIlvl3 {
+    out "\$1:\$2:\$3 %s";
+    ExtraInput = Ignore;
+}
+
+getStringSCPIlvl3 {
+    out "\$1:\$2:\$3?";
+    in "%s";
+    ExtraInput = Ignore;
+}
+
+
+
+#Generic function with units
+
+
+setFloatSCPIlvl1units {
+    out "\$1 %g \$2";
+    ExtraInput = Ignore;
+}
+
+setIntSCPIlvl1units {
+    out "\$1 %d \$2";
+    ExtraInput = Ignore;
+}
+
+setStringSCPIlvl1units {
+    out "\$1 %s \$2";
+    ExtraInput = Ignore;
+}
+
+setFloatSCPIlvl2units {
+    out "\$1:\$2 %g \$3";
+    ExtraInput = Ignore;
+}
+
+setIntSCPIlvl2units {
+    out "\$1:\$2 %d \$3";
+    ExtraInput = Ignore;
+}
+
+setStringSCPIlvl2units {
+    out "\$1:\$2 %s \$3";
+    ExtraInput = Ignore;
+}
+
+setFloatSCPIlvl3units {
+    out "\$1:\$2:\$3 %g \$4";
+    ExtraInput = Ignore;
+}
+
+setIntSCPIlvl3units {
+    out "\$1:\$2:\$3 %d \$4";
+    ExtraInput = Ignore;
+}
+
+setStringSCPIlvl3units {
+    out "\$1:\$2:\$3 %s \$4";
     ExtraInput = Ignore;
 }
