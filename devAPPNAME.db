@@ -12,6 +12,19 @@ record(waveform, "$(P)$(R):IDN") {
   field(NELM, "80")
 }
 
+
+record(mbbo, "$(P)$(R):Combine:Feed") {
+  field(DTYP, "stream")
+  field(OUT, "@dev$[APP_NAME].proto setCombine() $(PORT) $(ADDR)")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(TWVL, "2")
+  field(ONST, "Eject!")
+  field(TWST, "Stop!")
+  field(ZRST, "")
+  field(FLNK, "$(P)$(R):ReadCombine:Feed")
+}
+
 record(mbbo, "$(P)$(R):S1:Function") {
   field(DTYP, "stream")
   field(OUT, "@dev$[APP_NAME].proto setFunction(Source1) $(PORT) $(ADDR)")
@@ -433,6 +446,19 @@ record(mbbi, "$(P)$(R):S2:ReadFunction") {
   field(ONST, "Square")
   field(TWST, "Triangle")
 }
+
+record(mbbi, "$(P)$(R):ReadCombine:Feed") {
+  field(PINI, "YES")
+  field(DTYP, "stream")
+  field(INP, "@dev$[APP_NAME].proto getCombine() $(PORT) $(ADDR)")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(TWVL, "2")
+  field(ZRST, "CH1")
+  field(ONST, "CH2")
+  field(TWST, "NONE")
+}
+
 
 record(ai, "$(P)$(R):S2:ReadFreq") {
   field(PINI, "YES")

@@ -19,6 +19,17 @@ setFunction {
     ExtraInput = Ignore;
 }
 
+setCombine {
+    out "COMB:FEED %{CH1|CH2|NONE}";
+    ExtraInput = Ignore;
+}
+
+getCombine {
+    out "COMB:FEED?";
+    in "%{CH1|CH2|NONE}";
+    ExtraInput = Ignore;
+}
+
 getFunction {
     out "\$1:Function?";
     in  "%{SIN|SQU|TRI}";
